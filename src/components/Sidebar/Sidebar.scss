@@ -1,0 +1,53 @@
+.RequestItem{
+    word-break: break-all;
+    border-bottom: 1px solid #00000014;
+    cursor: pointer;
+    position: relative;
+    &:hover{
+        background-color:#00000014
+    }
+}
+.RequestItem__action{
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.method-get{
+    color: green
+}
+.method-post{
+    color: rgb(238, 197, 18);
+}
+.method-del{
+    color: red
+}
+.method-put{
+    color: blue
+}
+.Sidebar__addfolder{
+    width:26px;
+    border: 1px solid #ced4da;
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.Sidebar__header{
+    text-decoration: none !important;
+    h2{
+        color: black !important;
+        margin: 0;
+    }
+    &:after{
+        display: none !important;
+    }
+}
+.SidebarItems{
+    position: relative;
+    &>div{
+        position: absolute;
+        overflow-y: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+}
