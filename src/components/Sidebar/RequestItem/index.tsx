@@ -43,7 +43,7 @@ const RequestItem: React.FC<RequestItemProps> = ({ requestItem }) => {
         style={{
           width: "calc(100%-30px)",
           letterSpacing: "0px",
-          minHeight: "24px",
+          minHeight: "21px",
           flexGrow: 1,
         }}
         onClick={() => selectRequestItem(requestItem)}

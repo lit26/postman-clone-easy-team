@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./RequestFolder.scss";
-import { GrAdd } from "react-icons/gr";
+import { GrAdd, GrSubtract } from "react-icons/gr";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { useEffect } from "react";
 import { useApi } from "../../../context/ApiContext";
@@ -16,7 +16,7 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
   const [show, setShow] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [editFolder, setEditFolder] = useState(false);
-  const { requestItems, addRequestItem, updateFolder } = useApi();
+  const { requestItems, addRequestItem, updateFolder, deleteFolder } = useApi();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,25 +37,28 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
     }
   };
 
-  const requestSubItems: RequestItemType[] = folder.order.reduce(
-    (acc: RequestItemType[], item) => {
-      if (typeof item === "string") {
-        const findItem: RequestItemType | undefined = requestItems.find(
-          (item2) => item2.id === item
-        );
-        if (findItem) {
-          return acc.concat(findItem);
+  const requestSubItems: RequestItemType[] = folder.order
+    ? folder.order.reduce((acc: RequestItemType[], item) => {
+        if (typeof item === "string") {
+          const findItem: RequestItemType | undefined = requestItems.find(
+            (item2) => item2.id === item
+          );
+          if (findItem) {
+            return acc.concat(findItem);
+          }
         }
-      }
 
-      return acc;
-    },
-    []
-  );
+        return acc;
+      }, [])
+    : [];
 
   const handleAdd = () => {
     addRequestItem(folder.id);
     setShow(true);
+  };
+
+  const handleDelete = () => {
+    deleteFolder(folder.id);
   };
 
   useEffect(() => {
@@ -94,7 +97,12 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
               </div>
             )}
           </div>
-          {showAdd && <GrAdd onClick={handleAdd} />}
+          {showAdd && (
+            <>
+              <GrAdd onClick={handleAdd} />
+              <GrSubtract onClick={handleDelete} />
+            </>
+          )}
         </div>
       </div>
       {show && (

@@ -1,7 +1,7 @@
 import React, { useContext, useState, ReactNode } from "react";
 import axios from "axios";
 import prettyBytes from "pretty-bytes";
-import { database } from "../config/firebase";
+import { database, firestore } from "../config/firebase";
 import {
   Folder,
   Param,
@@ -38,6 +38,7 @@ interface ApiContextProps {
   setHistory: React.Dispatch<React.SetStateAction<RequestItemType[]>>;
   addFolder: () => void;
   updateFolder: (updateFolder: Folder, folderName: string) => void;
+  deleteFolder: (folderId: string) => void;
   addRequestItem: (folderId: string) => void;
   selectRequestItem: (requestItem: RequestItemType) => void;
   updateRequestItemOrder: (
@@ -184,6 +185,28 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
       });
   };
 
+  const deleteRequestItems = async (folderId: string) => {
+    const emptyFolder = await database.requestItems
+      .where("folderId", "==", folderId)
+      .get();
+    const batch = firestore.batch();
+    emptyFolder.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    await batch.commit();
+    setRequestItems(requestItems.filter((item) => item.folderId !== folderId));
+  };
+
+  const deleteFolder = (folderId: string) => {
+    deleteRequestItems(folderId);
+    database.folders
+      .doc(folderId)
+      .delete()
+      .then((res) => {
+        setFolders(folders.filter((folder) => folder.id !== folderId));
+      });
+  };
+
   const addRequestItem = (folderId: string) => {
     const addItem: RequestItemType = {
       requestName: "New request",
@@ -196,6 +219,12 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
       createdAt: database.getCurrentTimestamp(),
     };
     database.requestItems.add(addItem).then((res) => {
+      if (requestItems.length === 0) {
+        selectRequestItem({
+          ...addItem,
+          id: res.id,
+        });
+      }
       setRequestItems([
         ...requestItems,
         {
@@ -203,6 +232,26 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
           id: res.id,
         },
       ]);
+      const updateFolder = folders.find((folder) => folder.id === folderId);
+      if (updateFolder) {
+        const oldOrder = updateFolder.order ? updateFolder.order : [];
+        const newOrder = [...oldOrder, res.id];
+        database.folders
+          .doc(folderId)
+          .update({ order: newOrder })
+          .then(() => {
+            setFolders(
+              folders.map((folder) =>
+                folder.id === folderId
+                  ? {
+                      ...folder,
+                      order: newOrder,
+                    }
+                  : folder
+              )
+            );
+          });
+      }
     });
   };
 
@@ -353,6 +402,7 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
     setHistory,
     addFolder,
     updateFolder,
+    deleteFolder,
     addRequestItem,
     selectRequestItem,
     saveRequestItem,

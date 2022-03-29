@@ -41,7 +41,9 @@ const Sidebar: React.FC = () => {
       setFolders(res);
       getRequestItems().then((resp) => {
         setRequestItems(resp.map((item) => ({ ...item, edit: false })));
-        selectRequestItem(resp[0]);
+        if (resp.length > 0) {
+          selectRequestItem(resp[0]);
+        }
       });
     });
     getHistory().then((res) => {

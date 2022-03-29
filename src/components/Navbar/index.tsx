@@ -20,22 +20,12 @@ const Navbar: React.FC = () => {
         <Nav className="Navbar__links">
           <NavDropdown
             title={
-              <div
-                className="d-flex align-items-center justify-content-center rounded-circle"
-                style={{
-                  height: "38px",
-                  width: "38px",
-                  border: "3px solid #ccc8c8",
-                }}
-              >
-                <div
-                  style={{
-                    height: "30px",
-                    width: "30px",
-                    backgroundColor: "#ccc8c8",
-                    borderRadius: "50%",
-                  }}
-                ></div>
+              <div>
+                <img
+                  className="avatar"
+                  src={require("../../assets/profilePic.png").default}
+                  alt=""
+                />
               </div>
             }
             style={{ padding: 0, marginLeft: "5px" }}
