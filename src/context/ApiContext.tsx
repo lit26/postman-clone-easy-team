@@ -40,6 +40,10 @@ interface ApiContextProps {
   updateFolder: (updateFolder: Folder, folderName: string) => void;
   addRequestItem: (folderId: string) => void;
   selectRequestItem: (requestItem: RequestItemType) => void;
+  updateRequestItemOrder: (
+    folderId: string,
+    newIds: (string | undefined)[]
+  ) => void;
   saveRequestItem: () => void;
   removeRequestItem: (removeRequestItem: RequestItemType) => void;
   mode: string;
@@ -161,7 +165,7 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
     database.folders
       .add({ name: "New folder" })
       .then((res) =>
-        setFolders([...folders, { id: res.id, name: "New folder" }])
+        setFolders([...folders, { id: res.id, name: "New folder", order: [] }])
       );
   };
 
@@ -294,9 +298,27 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
     }
   };
 
-  const requestItem = (mode !== "History" ? requestItems : history).find(
-    (item) => item.id === currentRequestItemId
-  );
+  const updateRequestItemOrder = (
+    folderId: string,
+    newIds: (string | undefined)[]
+  ) => {
+    if (
+      Array.isArray(newIds) &&
+      newIds.length &&
+      newIds.every((item) => typeof item === "string")
+    ) {
+      setFolders(
+        folders.map((folder) =>
+          folder.id === folderId ? { ...folder, order: newIds } : folder
+        )
+      );
+      database.folders.doc(folderId).update({ order: newIds });
+    }
+  };
+
+  const requestItem =
+    requestItems.find((item) => item.id === currentRequestItemId) ||
+    history.find((item) => item.id === currentRequestItemId);
 
   const requestName = requestItem ? requestItem.requestName : "";
   const url = requestItem ? requestItem.url : "";
@@ -334,6 +356,7 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
     addRequestItem,
     selectRequestItem,
     saveRequestItem,
+    updateRequestItemOrder,
     removeRequestItem,
     mode,
     setMode,

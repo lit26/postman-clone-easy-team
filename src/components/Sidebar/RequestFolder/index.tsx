@@ -1,13 +1,14 @@
 import React, { useState, useRef } from "react";
-import RequestItem from "../RequestItem";
 import "./RequestFolder.scss";
 import { GrAdd } from "react-icons/gr";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { useEffect } from "react";
 import { useApi } from "../../../context/ApiContext";
+import FolderItems from "./FolderItems";
+import { Folder, RequestItemType } from "../../../types/data";
 
 interface RequestFolderProps {
-  folder: any;
+  folder: Folder;
 }
 
 const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
@@ -36,8 +37,20 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
     }
   };
 
-  const requestSubItems = requestItems.filter(
-    (requestItem) => requestItem.folderId === folder.id
+  const requestSubItems: RequestItemType[] = folder.order.reduce(
+    (acc: RequestItemType[], item) => {
+      if (typeof item === "string") {
+        const findItem: RequestItemType | undefined = requestItems.find(
+          (item2) => item2.id === item
+        );
+        if (findItem) {
+          return acc.concat(findItem);
+        }
+      }
+
+      return acc;
+    },
+    []
   );
 
   const handleAdd = () => {
@@ -86,12 +99,7 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
       </div>
       {show && (
         <div>
-          {requestSubItems.map((requestItem: any, index: number) => (
-            <RequestItem
-              key={`requestItem_${index}`}
-              requestItem={requestItem}
-            />
-          ))}
+          <FolderItems items={requestSubItems} />
         </div>
       )}
     </>

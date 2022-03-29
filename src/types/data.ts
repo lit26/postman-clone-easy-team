@@ -13,6 +13,7 @@ export type ReqAuth = {
 export type Folder = {
   id: string;
   name: string;
+  order: (string | undefined)[];
 };
 
 export type RequestItemType = {
