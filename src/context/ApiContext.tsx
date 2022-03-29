@@ -12,6 +12,8 @@ import {
 } from "../types/data";
 
 interface ApiContextProps {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
   requestItem?: RequestItemType;
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   requestName: string;
@@ -87,6 +89,7 @@ interface ProviderProps {
 }
 
 export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
+  const [search, setSearch] = useState("");
   const [currentRequestItemId, setCurrentRequestItemId] = useState("");
   const [auth, setAuth] = useState<ReqAuth>({
     authType: "",
@@ -379,6 +382,8 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
   const doc = requestItem ? requestItem.doc : "{\n\t\n}";
 
   const value = {
+    search,
+    setSearch,
     requestItem,
     method,
     requestName,

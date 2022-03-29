@@ -16,7 +16,8 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
   const [show, setShow] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [editFolder, setEditFolder] = useState(false);
-  const { requestItems, addRequestItem, updateFolder, deleteFolder } = useApi();
+  const { requestItems, addRequestItem, updateFolder, deleteFolder, search } =
+    useApi();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,12 +38,15 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
     }
   };
 
+  const displayRequestItems = requestItems.filter((item) =>
+    item.requestName.toLowerCase().includes(search.toLowerCase())
+  );
+
   const requestSubItems: RequestItemType[] = folder.order
     ? folder.order.reduce((acc: RequestItemType[], item) => {
         if (typeof item === "string") {
-          const findItem: RequestItemType | undefined = requestItems.find(
-            (item2) => item2.id === item
-          );
+          const findItem: RequestItemType | undefined =
+            displayRequestItems.find((item2) => item2.id === item);
           if (findItem) {
             return acc.concat(findItem);
           }

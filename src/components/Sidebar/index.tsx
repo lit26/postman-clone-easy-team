@@ -11,6 +11,8 @@ import { Folder, RequestItemType } from "../../types/data";
 
 const Sidebar: React.FC = () => {
   const {
+    search,
+    setSearch,
     folders,
     setFolders,
     setRequestItems,
@@ -52,6 +54,10 @@ const Sidebar: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setFolders, setRequestItems, setHistory]);
 
+  const displayHistory = history.filter((item) =>
+    item.requestName.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div
       className="p-2 flex-shrink-0 d-flex flex-column"
@@ -79,10 +85,11 @@ const Sidebar: React.FC = () => {
           </div>
 
           <input
-            required
             className="form-control"
-            type="url"
+            type="text"
             placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="SidebarItems flex-grow-1 my-2">
@@ -91,12 +98,14 @@ const Sidebar: React.FC = () => {
               ? folders.map((folder: Folder, index: number) => (
                   <RequestFolder key={`folder_${index}`} folder={folder} />
                 ))
-              : history.map((requestItem: RequestItemType, index: number) => (
-                  <RequestItem
-                    key={`requestItem_${index}`}
-                    requestItem={requestItem}
-                  />
-                ))}
+              : displayHistory.map(
+                  (requestItem: RequestItemType, index: number) => (
+                    <RequestItem
+                      key={`requestItem_${index}`}
+                      requestItem={requestItem}
+                    />
+                  )
+                )}
           </div>
         </div>
       </div>
