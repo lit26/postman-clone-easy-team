@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./RequestFolder.scss";
-import { GrAdd, GrSubtract } from "react-icons/gr";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowDown, IoIosAdd } from "react-icons/io";
+import { AiOutlineMinus } from "react-icons/ai";
 import { useEffect } from "react";
 import { useApi } from "../../../context/ApiContext";
 import FolderItems from "./FolderItems";
@@ -103,8 +103,11 @@ const RequestFolder: React.FC<RequestFolderProps> = ({ folder }) => {
           </div>
           {showAdd && (
             <>
-              <GrAdd onClick={handleAdd} />
-              <GrSubtract onClick={handleDelete} />
+              <IoIosAdd className="FolderItemsAction" onClick={handleAdd} />
+              <AiOutlineMinus
+                className="FolderItemsAction"
+                onClick={handleDelete}
+              />
             </>
           )}
         </div>
