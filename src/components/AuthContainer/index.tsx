@@ -10,7 +10,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ children, header }) => {
   return (
     <div className="AuthContainer p-5">
       <h2>Postman easy team</h2>
-      <div className="AuthContainer__form p-30">
+      <div className="AuthContainer__form">
         <h2>{header}</h2>
         {children}
       </div>
