@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="d-flex" style={{ height: "100%" }}>
       <Sidebar />
-      <div style={{ width: "calc(100% - 300px)" }}>
+      <div style={{ width: "70%" }}>
         <Request />
         <Response />
       </div>

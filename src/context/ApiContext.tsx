@@ -95,7 +95,7 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
     authType: "",
     token: "",
   });
-  const [resStatus, setResStatus] = useState<any>({ status: "" });
+  const [resStatus, setResStatus] = useState<ResStatus>({ status: -1 });
   const [resData, setResData] = useState({});
   const [resHeaders, setResHeaders] = useState<ResHeader>({});
   const [loading, setLoading] = useState(false);
@@ -343,7 +343,7 @@ export const ApiProvider: React.FC<ProviderProps> = ({ children }) => {
         setAuth(requestItem.auth);
       }
       setResStatus({
-        status: "",
+        status: -1,
       });
       setResData({});
       setResHeaders({});

@@ -5,9 +5,10 @@ import { database } from "../../config/firebase";
 import "firebase/firestore";
 import { useApi } from "../../context/ApiContext";
 import { GrAdd } from "react-icons/gr";
-import { Dropdown } from "react-bootstrap";
 import RequestItem from "./RequestItem";
 import { Folder, RequestItemType } from "../../types/data";
+import { BsClockHistory, BsCollection } from "react-icons/bs";
+import SidebarNav from "./SidebarNav";
 
 const Sidebar: React.FC = () => {
   const {
@@ -58,25 +59,27 @@ const Sidebar: React.FC = () => {
     item.requestName.toLowerCase().includes(search.toLowerCase())
   );
 
+  const clickHandle = (nav: string) => {
+    setMode(nav);
+  };
+
   return (
     <div
       className="p-2 flex-shrink-0 d-flex flex-column"
-      style={{ width: "300px" }}
+      style={{ width: "30%" }}
     >
-      <Dropdown>
-        <Dropdown.Toggle variant="link" className="Sidebar__header">
-          <h2>{mode}</h2>
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={() => setMode("Collections")}>
-            Collections
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => setMode("History")}>
-            History
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      <div className="d-flex justify-content-around">
+        <SidebarNav
+          Icon={BsCollection}
+          title="Collection"
+          clickHandle={clickHandle}
+        />
+        <SidebarNav
+          Icon={BsClockHistory}
+          title="History"
+          clickHandle={clickHandle}
+        />
+      </div>
       <hr />
       <div className="flex-grow-1 d-flex flex-column">
         <div className="input-group">

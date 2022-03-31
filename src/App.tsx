@@ -11,6 +11,7 @@ const App: React.FC = () => {
   useEffect(() => {
     auth.onAuthStateChanged((user: any) => {
       if (user) {
+        console.log(user);
         console.log("User detected.");
       } else {
         console.log("No user detected");
