@@ -13,7 +13,7 @@ import SidebarNav from "./SidebarNav";
 const Sidebar: React.FC = () => {
   useEffect(() => {
     alert(
-      "This is a demo app will behave a little bit different than the actual app. All the changes in this app will not update the database. "
+      "This demo app will behave a little bit different than the actual app. All the changes in this app will not update the database. "
     );
   }, []);
   const {
