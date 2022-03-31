@@ -1,11 +1,19 @@
-# Getting Started with Create React App
+# Postman easy team
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is an easy postman web app that can be used for frontend and backend to test api endpoints. The app use Google firebase storage to store the requests.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Demo
+Demo website: https://postman-easy-team.web.app/
 
+Testing account: test@example.com
+
+Password: 123456
+
+## Installation
+```
+$ git clone https://github.com/lit26/postman-easy-team
+```
 ### `yarn start`
 
 Runs the app in the development mode.\
@@ -27,20 +35,42 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Firebase
 
-### `yarn eject`
+We are using Firebase to store the collections and history and authenticate user. In the [Firebase console](
+https://console.firebase.google.com
+), create a project and setup the authentication and firestore database. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Firebase deploy
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Install Firebase
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Go to your local terminal
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+npm install -g firebase-tools
+```
+### Login in to your firebase on local terminal
+```
+firebase login
+```
+Select the gmail account with firebase
 
-## Learn More
+### Deploy app
+```
+firebase init
+```
+Choose `Hosting: Configure and deploy Firebase Hosting sites` for hosting web apps (Be aware use `spacebar` to select option)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Choose the option (ex: Use an existing project, Create a new project, etc...)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+What do you want to use as your public directory?
+```
+build
+```
+
+Deploy app
+```
+npm run build
+firebase deploy
+```
