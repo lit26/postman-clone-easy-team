@@ -1,6 +1,6 @@
 # Postman easy team
 
-This project is an easy postman web app that can be used for frontend and backend to test api endpoints. The app use Google firebase storage to store the requests.
+Postman is a great app for api testing. However, the price is high for postman team if you have more than 3 people in the team. This project is an easy postman web app that can be used for frontend and backend to test api endpoints. The app use Google firebase storage to store the requests and history and authenticate users with firebase authentication. Teams can test GET, POST, PUT, PATCH, and DELETE requests with request headers, body, paramsters and authentications securely.
 
 
 ## Demo
@@ -41,7 +41,10 @@ We are using Firebase to store the collections and history and authenticate user
 https://console.firebase.google.com
 ), create a project and setup the authentication and firestore database. 
 
-## Firebase deploy
+## Authentication
+This app only allow signin, signout, and change password. The administrator can add user on firebase console.
+
+## Deploy (optional)
 
 ## Install Firebase
 
@@ -74,3 +77,8 @@ Deploy app
 npm run build
 firebase deploy
 ```
+
+## Reference
+
+- [React Authentication Crash Course With Firebase And Routing](https://www.youtube.com/watch?v=PKwu15ldZ7k)
+- [Stop Using Postman - Create Your Own Postman Instead](https://www.youtube.com/watch?v=qQR0mfFGRmo)
