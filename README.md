@@ -2,6 +2,8 @@
 
 Postman is a great app for api testing. However, the price is high for postman team if you have more than 3 people in the team. This project is an easy postman web app that can be used for frontend and backend to test api endpoints. The app use Google firebase storage to store the requests and history and authenticate users with firebase authentication. Teams can test GET, POST, PUT, PATCH, and DELETE requests with request headers, body, paramsters and authentications securely.
 
+![demo](asset/postman-easy-team.png)
+
 
 ## Demo
 Demo website: https://postman-easy-team.web.app/
